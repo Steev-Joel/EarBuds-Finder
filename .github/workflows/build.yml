@@ -1,7 +1,10 @@
 name: Build APK
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,27 +14,26 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - name: Prepare Android SDK
-        run: |
-          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
-          yes | "$SDKM" --licenses > /dev/null || true
-          "$SDKM" "platforms;android-34" "build-tools;34.0.0" || true
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9"
       - name: Build debug APK
         run: |
           set -o pipefail
-          gradle assembleDebug --stacktrace 2>&1 | tee build.log
-      - name: Show errors
+          gradle assembleDebug 2>&1 | tee build.log
+      - name: Publish error log
         if: failure()
         run: |
-          {
-            echo '### Build errors'
-            echo '```'
-            grep -n -B2 -A12 -E "^e: |FAILURE:|What went wrong|error:" build.log | head -120
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          grep -n -B2 -A14 -E "^e: |FAILURE:|What went wrong|error:" build.log | head -150 > "$HOME/errors.txt" || true
+          tail -40 build.log >> "$HOME/errors.txt"
+          git config user.name build-bot
+          git config user.email build-bot@users.noreply.github.com
+          git checkout --orphan build-log
+          git rm -rf --quiet . || true
+          cp "$HOME/errors.txt" errors.txt
+          git add errors.txt
+          git commit -m "Build error log"
+          git push --force origin build-log
       - uses: actions/upload-artifact@v4
         with:
           name: earbud-finder-apk
