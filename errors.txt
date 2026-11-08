@@ -1,0 +1,37 @@
+2-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794130121235.json
+3-
+4:FAILURE: Build failed with an exception.
+5-
+6-* Where:
+7-Build file '/home/runner/work/EarBuds-Finder/EarBuds-Finder/app/build.gradle.kts' line: 1
+8-
+9:* What went wrong:
+10-Error resolving plugin [id: 'org.jetbrains.kotlin.android', version: '2.0.21', apply: false]
+11-> The request for this plugin could not be satisfied because the plugin is already on the classpath with a different version (2.0.20).
+12-
+13-* Try:
+14-> Run with --stacktrace option to get the stack trace.
+15-> Run with --info or --debug option to get more log output.
+16-> Run with --scan to get full insights.
+17-> Get more help at https://help.gradle.org.
+18-
+19-BUILD FAILED in 36s
+Starting a Gradle Daemon (subsequent builds will be faster)
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1794130121235.json
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/home/runner/work/EarBuds-Finder/EarBuds-Finder/app/build.gradle.kts' line: 1
+
+* What went wrong:
+Error resolving plugin [id: 'org.jetbrains.kotlin.android', version: '2.0.21', apply: false]
+> The request for this plugin could not be satisfied because the plugin is already on the classpath with a different version (2.0.20).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 36s
